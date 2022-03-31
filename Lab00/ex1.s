@@ -1,6 +1,6 @@
 .data                   # dichiarazione dati
 
-op1: .byte 3
+op1: .byte 3 
 op2: .byte 2
 res: .space 1           # allocazione spazio in memoria per risultato
 
