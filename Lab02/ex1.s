@@ -31,7 +31,6 @@ main:
           andi $t2, $t1, 1			# $t2 = $t1 & 1
           li $t3, 0		# $t3 = 0
           
-          
           bne	$t2, $t3, target	# if $t2 != $t3 then target
 
           la $a0, even		# 

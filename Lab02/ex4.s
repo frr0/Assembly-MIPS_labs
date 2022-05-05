@@ -1,72 +1,54 @@
-
 .data
 
 message:      .asciiz "number in a crescent order: "
 newline:      .asciiz "\n"
 space:        .asciiz " "
-byte:         .byte 127
-n1:           .byte 34
-n2:           .byte 4
-n3:           .byte 67
-error_p:      .asciiz "error, number not storable in a byte!"
+n1:           .half 1834
 
 .text
 .globl main
 .ent main
 
-main:
-              lb $t1, n1
-              lb $t2, n2
-              lb $t3, n3
+#; main:
+#;               lb $t1, n1
 
-              # check
+#;               la $a0, message
+#;               li $v0, 4
+#;               syscall
 
+#;               move $a0, $t1       # put register vaule in $a0
+#;               li $v0, 1           # system call – print string
+#;               syscall
 
-move1:
-              blt	$t1, $t2, move2	# if $t1 > $t2 then target
-              move 	$t4, $t1		# $t4 = $t1
-              move 	$t1, $t2		# $t1 = $t2
-              move 	$t2, $t4		# $t2 = $t4
+#;               la $a0, space	
+#;               li $v0, 4
+#;               syscall
 
-move2:
-              blt	$t1, $t3, move3	# if $t1 > $t3 then target
-              move 	$t4, $t1		# $t4 = $t1
-              move 	$t1, $t3		# $t1 = $t3
-              move 	$t3, $t4		# $t3 = $t4
+#;               li $v0,10           # code for program exit
+#;               syscall             # end
 
-move3:
-              blt	$t2, $t3, end	# if $t2 > $t3 then target
-              move 	$t4, $t2		# $t4 = $t2
-              move 	$t2, $t3		# $t2 = $t3
-              move 	$t3, $t4		# $t3 = $t4
+#; .end main
 
+main:  
+       and $t3, $0, $0 # azzeramento risultato
+       and $t4, $0, $0 # azzeramento indice
+       lhu $t0, num
+       li $t1, 1
 
-end:
+ciclo: 
+       and $t2, $t0, $t1
+       beq $t2, 0, next
+       addi $t3, $t3, 1
 
-              la $a0, message	
-              li $v0, 4		# $v0 = odd
-              syscall
-              move $a0, $t1       # put register vaule in $a0
-              li $v0, 1           # system call – print string
-              syscall
+next: 
+       sll $t1, $t1, 1
+       addi $t4, $t4, 1
+       bne $t4, 16, ciclo
 
-              la $a0, space	
-              li $v0, 4		# $v0 = odd
-              syscall
-
-              move $a0, $t2       # put register vaule in $a0
-              li $v0, 1           # system call – print string
-              syscall
-
-              la $a0, space	
-              li $v0, 4		# $v0 = odd
-              syscall
-
-              move $a0, $t3       # put register vaule in $a0
-              li $v0, 1           # system call – print string
-              syscall
-
-              li $v0,10           # code for program exit
-              syscall             # end
-
+       move $a0, $t3 # stampa risultato
+       li $v0, 1
+       syscall
+       
+       li $v0, 10
+       syscall
 .end main
