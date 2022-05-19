@@ -42,7 +42,7 @@ read:
 
 pali: 
 
-      # get ffrom the stack
+      # get from the stack
       
       # go to the first item with t9 and to the last to avoid \n 
       addi $t9, $t9, -4 
